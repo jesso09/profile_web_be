@@ -10,7 +10,7 @@ class TechProject extends Model
     use HasFactory;
     protected $fillable = [
         'project_id',
-        'techs_id,'
+        'techs_id',
     ];
     public function project()
     {

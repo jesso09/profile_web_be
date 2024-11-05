@@ -97,6 +97,8 @@ class ProjectController extends Controller
             'name' => 'required',
             'desc' => 'required',
             // 'status' => 'required',
+            'techs_id' => 'nullable|array', // techs_id is now optional
+            'techs_id.*' => 'exists:teches,id', // Validate each tech ID exists in techs table if provided
         ], [
             'project_images.mimes' => 'Format gambar yang diperbolehkan: jpeg, png, jpg, gif.',
         ]);
@@ -129,10 +131,20 @@ class ProjectController extends Controller
             $generated_name = null;
         }
 
+        if ($newData) {
+            # code...
+            if ($request->has('techs_id')) {
+                foreach ($request->techs_id as $techId) {
+                    $newData->techsProject()->create([
+                        'techs_id' => $techId,
+                    ]);
+                }
+            }     
+        }
+
         return response([
             'message' => 'Data added successfully',
             'data' => $newData,
-            'images' => $newImage,
         ], 201);
     }
 
