@@ -27,7 +27,11 @@ Route::group(['prefix' => 'public'], function () {
 
 Route::group(['prefix' => 'private', 'middleware' => ['auth:sanctum']], function () {
     Route::post('new-project', [ProjectController::class, 'addProject']);
+    Route::post('edit-project/{id}', [ProjectController::class, 'updateProject']);
+    Route::delete('del-project/{id}', [ProjectController::class, 'deleteProject']);
     Route::post('new-tech', [ProjectController::class, 'addTech']);
+    Route::post('edit-tech/{id}', [ProjectController::class, 'updateTechs']);
+    Route::delete('del-tech/{id}', [ProjectController::class, 'deleteTechs']);
     Route::get('user', [ProjectController::class, 'getUser']);
     Route::get('user/{id}', [ProjectController::class, 'getUserById']);
     Route::get('pp/{filename}', [ProjectController::class, 'getPP']);
