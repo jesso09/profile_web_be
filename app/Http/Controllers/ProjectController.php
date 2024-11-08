@@ -119,7 +119,8 @@ class ProjectController extends Controller
         if ($request->project_images != null) {
 
             $original_name = $request->project_images->getClientOriginalName();
-            $generated_name = 'images' . '-' . time() . '.' . $request->project_images->extension();
+            $extension = strtoupper($request->project_images->extension());
+            $generated_name = 'images' . '-' . time() . '.' . $extension;
 
             // menyimpan gambar
             $request->project_images->storeAs('public/', $generated_name);
@@ -235,7 +236,8 @@ class ProjectController extends Controller
             }
             if ($data->project_images == null) {
                 $original_name = $request->project_images->getClientOriginalName();
-                $generated_name = 'images' . '-' . time() . '.' . $request->project_images->extension();
+                $extension = strtoupper($request->project_images->extension());
+                $generated_name = 'images' . '-' . time() . '.' . $extension;
 
                 // menyimpan gambar
                 $request->project_images->storeAs('public/', $generated_name);
@@ -245,12 +247,13 @@ class ProjectController extends Controller
                 ]);
 
 
-            } 
+            }
             // else if ($data->project_images != null) {
 
             //     // unlink(public_path('storage/public/lab/' . $data->project_images));
             //     $original_name = $request->project_images->getClientOriginalName();
-            //     $generated_name = 'images' . '-' . time() . '.' . $request->project_images->extension();
+            //     $extension = strtoupper($request->project_images->extension());
+            $generated_name = 'images' . '-' . time() . '.' . $extension;
             //     // menyimpan gambar
             //     $request->project_images->storeAs('public/', $generated_name);
             //     $data->project_images = $generated_name;
@@ -295,7 +298,7 @@ class ProjectController extends Controller
             'message' => 'Data and associated images deleted successfully',
         ], 200);
     }
-    
+
     public function updateTechs(Request $request, $id)
     {
         $data = Tech::find($id);
