@@ -122,7 +122,7 @@ class ProjectController extends Controller
             $generated_name = 'images' . '-' . time() . '.' . $request->project_images->extension();
 
             // menyimpan gambar
-            $request->project_images->storeAs('public/assets', $generated_name);
+            $request->project_images->storeAs('public/project', $generated_name);
 
             $newImage = $newData->projectImages()->create([
                 'name' => $generated_name,
@@ -227,7 +227,7 @@ class ProjectController extends Controller
             }
         } else if ($request->project_images != null) {
             foreach ($data->projectImages as $image) {
-                $imagePath = public_path('storage/assets/' . $image->name);
+                $imagePath = public_path('storage/project/' . $image->name);
                 if (file_exists($imagePath)) {
                     unlink($imagePath);
                 }
@@ -238,7 +238,7 @@ class ProjectController extends Controller
                 $generated_name = 'images' . '-' . time() . '.' . $request->project_images->extension();
 
                 // menyimpan gambar
-                $request->project_images->storeAs('public/assets', $generated_name);
+                $request->project_images->storeAs('public/project', $generated_name);
                 $newImage = $data->projectImages()->create([
                     'name' => $generated_name,
                     'status' => "Active",
@@ -252,7 +252,7 @@ class ProjectController extends Controller
             //     $original_name = $request->project_images->getClientOriginalName();
             //     $generated_name = 'images' . '-' . time() . '.' . $request->project_images->extension();
             //     // menyimpan gambar
-            //     $request->project_images->storeAs('public/assets', $generated_name);
+            //     $request->project_images->storeAs('public/project', $generated_name);
             //     $data->project_images = $generated_name;
             // }
         }
@@ -282,7 +282,7 @@ class ProjectController extends Controller
 
         // Loop through each project image and delete the file if it exists
         foreach ($targetData->projectImages as $image) {
-            $imagePath = public_path('storage/assets/' . $image->name);
+            $imagePath = public_path('storage/project/' . $image->name);
             if (file_exists($imagePath)) {
                 unlink($imagePath);
             }
