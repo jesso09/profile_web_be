@@ -23,9 +23,11 @@ Route::group(['prefix' => 'public'], function () {
     Route::post('login', [ProjectController::class, 'login']);
     Route::get('index', [ProjectController::class, 'index']);
     Route::get('tech', [ProjectController::class, 'indexTech']);
+    Route::get('color', [ProjectController::class, 'indexColor']);
 });
 
 Route::group(['prefix' => 'private', 'middleware' => ['auth:sanctum']], function () {
+    Route::post('new-color', [ProjectController::class, 'addColor']);
     Route::post('new-project', [ProjectController::class, 'addProject']);
     Route::post('edit-project/{id}', [ProjectController::class, 'updateProject']);
     Route::delete('del-project/{id}', [ProjectController::class, 'deleteProject']);

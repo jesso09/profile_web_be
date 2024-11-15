@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ColorProject;
 use App\Models\Project;
 use App\Models\Tech;
 use App\Models\TechProject;
@@ -62,6 +63,22 @@ class ProjectController extends Controller
     public function index()
     {
         $projectData = Project::with('techsProject.techs', 'projectImages')->latest()->get();
+        if (is_null($projectData)) {
+            return response([
+                'message' => 'Data Empty',
+                'data' => $projectData
+            ], 404);
+        }
+
+        return response([
+            'message' => 'Successfully',
+            'data' => $projectData
+        ], 200);
+    }
+
+    public function indexColor()
+    {
+        $projectData = ColorProject::latest()->get();
         if (is_null($projectData)) {
             return response([
                 'message' => 'Data Empty',
@@ -164,6 +181,33 @@ class ProjectController extends Controller
         $newData = Tech::create([
             'name' => $request->name,
             'status' => $request->status,
+        ]);
+
+        return response([
+            'message' => 'Data added successfully',
+            'data' => $newData
+        ], 201);
+    }
+
+    public function addColor(Request $request)
+    {
+        // Validasi Formulir
+        $validator = Validator::make($request->all(), [
+            'project_id' => 'required',
+            // 'color1' => 'required',
+            // 'color2' => 'required',
+            'color3' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response(['message' => 'Invalid input data', 'errors' => $validator->errors()], 400);
+        }
+
+        $newData = ColorProject::create([
+            'project_id' => $request->project_id,
+            'color1' => "27272a",
+            'color2' => "27272a",
+            'color3' => $request->color3,
         ]);
 
         return response([
